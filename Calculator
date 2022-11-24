@@ -1,0 +1,40 @@
+#include<iostream>
+using namespace std;
+
+  int main()
+    {
+        int a,b;
+        char op;
+
+        cout<<"\nEnter your first number : ";
+        cin>>a;
+        cout<<"\nEnter your secoond number : ";
+        cin>>b;
+        cout<<"\nEnter operator : ";
+        cin>>op;
+
+        switch (op)
+        {
+        case '+':
+          cout<<"\n"<<a<<" + "<<b<<" = "<<a+b;
+         break;
+
+        case '-': 
+          cout<<"\n"<<a<<" - "<<b<<" = "<<a-b;
+        break;
+
+        case '/':
+           cout<<"\n"<<a<<" / "<<b<<" = "<<a/(float)b;
+        break;
+
+        case '*':
+          cout<<"\n"<<a<<" * "<<b<<" = "<<a*b;
+        break;       
+        
+        default:
+          cout<<"\nThis operator is not available yet.";
+            break;
+        }
+
+   return 0;     
+    }
