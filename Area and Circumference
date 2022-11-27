@@ -1,0 +1,34 @@
+#include<iostream>
+using namespace std;
+
+class circle
+{
+    private:
+    float raduis;
+    public:
+    void get_raduis(float r)
+    {
+        raduis = r;
+    }
+    void area()
+    {
+        cout<<"\nArea of circle is : "<<(3.14)*(raduis*raduis);
+    }
+    void circum()
+    {
+        cout<<"\nCircumference of the circle is : "<<2*(3.14)*raduis;
+    }
+};
+
+int main()
+{
+    circle c1;
+    float rad;
+    cout<<"\nEnter raduis of the circle : ";
+    cin>>rad;
+    c1.get_raduis(rad);
+    c1.area();
+    c1.circum();
+
+  return 0;  
+}
