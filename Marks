@@ -1,0 +1,58 @@
+#include<iostream>
+using namespace std;
+
+ int n;
+ int t=0;
+class Result
+{
+    private:
+    int rn, mk[20];
+    string name;
+    public:
+    void input()
+    {
+        cout<<"\nEnter your first name : ";
+        cin>>name;
+        cout<<"\nEnter your Roll No : ";
+        cin>>rn;
+        cout<<"\nEnter your number of subjects : ";
+        cin>>n;
+        int a=0; 
+        for(int i=0; i<n; i++)
+        {
+            ++a;
+            cout<<"\nEnter marks of subject "<<a<<": ";
+            cin>>mk[i];
+            cout<<endl;
+        }
+    }
+    void show()
+    {
+        cout<<"\nName : "<<name;
+        cout<<"\nRoll No : "<<rn;
+    }
+    void total()
+    {
+        for(int i=0; i<n; i++)
+        {
+          t=t+mk[i];
+        }
+        cout<<"\nTotal marks : "<<t;
+    }
+    float avg()
+    {
+       float average = t/n; 
+       return average;
+    }
+};
+
+int main()
+{
+    Result r;
+    r.input();
+    r.show();
+    r.total();
+    cout<<"\nAverage marks are : "<<r.avg();
+
+  return 0;  
+}
