@@ -1,0 +1,35 @@
+//Write a programe that input a positive number. It then displays the sum of all even and sum of all odd numbers
+//from 1 to that number.
+
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    int n,esum=0,osum=0;
+    bool check=false;
+
+    cout<<"Enter a number : ";
+    cin>>n;
+
+    while(n>=0)
+    {
+        if(n%2==0)
+          esum=esum+n;
+        else
+          osum=osum+n;
+
+        n--; 
+
+        check=true;     
+    }
+   if(check)
+     {
+        cout<<"\nSum of all even numbers are : "<<esum;
+        cout<<"\nSum of all odd numbers are : "<<osum;
+     }
+     else 
+       cout<<"\nInvalid number.";
+
+       return 0;
+}
