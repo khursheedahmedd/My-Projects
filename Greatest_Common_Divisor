@@ -1,0 +1,27 @@
+//Greatest common Divisor
+
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    int n1,n2,d=0;
+
+    cout<<"Enter first number : ";
+    cin>>n1;//9
+    cout<<"\nEnetr second number : ";
+    cin>>n2;//6
+
+    d=(n1<n2)?n1:n2;//6
+
+    while(d>=1)//6->5->4->3
+      {
+        if(n1%d==0 && n2%d==0)//false->false->false->true
+         break;
+        d--;//6->5->4->3 
+      }
+      cout<<"\nGreatest common divisor of "<<n1<<" and "<<n2<<" is : "<<d;//3
+
+    return 0;
+
+}
