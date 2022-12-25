@@ -1,0 +1,24 @@
+//Palindrome number.
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    int n,r=0,rev=0;
+
+    cout<<"Enter a number : ";
+    cin>>n;//6556
+    int num=n;//6556
+    while(n!=0)//6556->655->65->6->false
+    {
+      r=n%10;//6->5->5->6
+      rev=(rev*10)+r;//6->65->6556
+      n=n/10;//655->65->6->0
+    }
+    if(rev==num)//true
+      cout<<"\nThe reverse of given number is "<<rev<<" and the number is palindrome.";
+    else
+      cout<<"\nThe revers of given number is "<<rev<<" and the number is not palindrome.";
+
+    return 0;    
+}
