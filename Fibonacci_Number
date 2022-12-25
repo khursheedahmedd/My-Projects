@@ -1,0 +1,38 @@
+//Check a number wheither fibonacci or not
+
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    int a=0,b=1,n,next=0;
+    bool check=true;
+
+    cout<<"Enter a number : ";
+    cin>>n;
+
+    if(n==0 || n==1)
+      cout<<"\n"<<n<<" is a fibonacci number.";
+    else
+     {
+        int count=1;
+        while(count<=n)
+          {
+            next=a+b;
+            if(n==next)
+            {
+              cout<<"\n"<<n<<" is a fibonacci number.";
+              check=false;
+            }
+            a=b;
+            b=next;
+            count++;
+          }
+     }  
+     if(check)               
+      cout<<"\n"<<n<<" is not a fibonaccci number.";  
+            
+
+     return 0;
+    
+}
