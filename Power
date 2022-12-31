@@ -6,9 +6,9 @@ int main()
 {
     int a,b;
 
-    cout<<"Enter first number : ";
+    cout<<"Enter base : ";
     cin>>a;//2
-    cout<<"\nEnter second number : "; 
+    cout<<"\nEnter exponent : "; 
     cin>>b;//3
 
     int r=1;
