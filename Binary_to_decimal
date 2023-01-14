@@ -1,0 +1,30 @@
+//binary to decimal convertor
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+int main()
+{
+    long int n;
+
+    cout<<"\nEnter a binary number : ";
+    cin>>n;
+
+    long int dec=0,j=0,rem=0;
+
+    if(n%10==0 || n%10==1)
+    { 
+    while(n!=0)
+    {
+        rem=n%10;
+        dec+=rem*pow(2,j);
+        n/=10;
+        ++j;
+    }
+    cout<<"\nGiven number in decimal : "<<dec;
+    }
+    else
+     cout<<"\nInvalid number.";
+
+    return 0;
+}
