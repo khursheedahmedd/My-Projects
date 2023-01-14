@@ -1,0 +1,22 @@
+//Binary to Decimal convertor
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    int n;
+
+    cout<<"Enter decimal number : ";
+    cin>>n;//7
+
+    long int bin=0,rem=0,c=1;
+
+    while(n!=0)//true->true->true->false
+    {
+        rem=n%2;//1->1->1
+        bin+=rem*c;//1->11->11
+        c*=10;//10->100->1000
+        n/=2;//3->1->0
+    }
+    cout<<"\nGiven number in binary is : "<<bin;//111
+}
