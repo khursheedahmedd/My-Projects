@@ -1,0 +1,811 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+
+using namespace std;
+
+void show();
+void main_menu();
+int choice();
+int acc_man_choice();
+int atm_choice();
+void policy();
+int count();
+void add_acc();
+void disp_all_acc();
+void disp_acc_bank();
+void disp_acc_branch();
+void disp_acc_low_bal();
+void disp_acc_high_bal();
+void del_acc();
+void bal_inq();
+void deposit();
+bool Deposit(string acc);
+void withdraw();
+bool withDraw(string acc);
+void transfer();
+
+const int mx_acc = 100;
+
+string acc_hold[mx_acc];
+string acc_num[mx_acc];
+double acc_bal[mx_acc];
+string acc_Num[mx_acc];
+int num_acc = 0;
+
+int main()
+{
+  show();
+  int num_acc = count();
+
+  char ch;
+  do
+  {
+    main_menu();
+
+    cout << "\nPress Y if you want to repeat : ";
+    cin >> ch;
+  } while (ch == 'Y' || ch == 'y');
+
+  if (ch != 'y' || ch != 'Y')
+    cout << "\nExiting…";
+}
+
+void show()
+{
+  cout<<"\n\n\t*******************************************************";
+  cout<<"\n\t        ---> WELCOME TO BANK MANAGEMENT SYSTEM <---";
+  cout<<"\n\t*******************************************************\n\n";
+}
+
+void main_menu()
+{
+  int ch = choice();
+
+  switch (ch)
+  {
+  case 1: // Account Management
+  {
+    system("CLS");
+    int ch_a = acc_man_choice(); // Account Management Choice
+
+    switch (ch_a)
+    {
+    case 1: // Display Accounts
+      disp_all_acc();
+      disp_acc_bank();
+      disp_acc_branch();
+      disp_acc_low_bal();
+      disp_acc_high_bal();
+      break;
+    case 2: // Add Account
+      add_acc();
+      break;
+    case 3: // Delete Account
+      del_acc();
+      break;
+    default:
+      cout<<"\nInvalid choice…";
+    }
+  }
+  break;
+
+  case 2: // ATM
+  {
+    int ch_atm = atm_choice(); // ATM Choice
+    switch (ch_atm)
+    {
+    case 1: // Balance Inquiry
+      bal_inq();
+      break;
+    case 2: // Deposit
+      deposit();
+      break;
+    case 3://Withdraw
+     withdraw();
+     break; 
+    case 4: //transfer
+     transfer();
+     break;
+    default:
+     cout<<"\nInvalid choice…"; 
+    }
+  }
+  break;
+
+  case 3: // Policies
+    policy();
+    break;
+  default:
+   cout<<"\nInvalid choice…";  
+  }
+}
+
+int choice()
+{
+  int ch;
+  //   cout << "\n\t\t*********************************";
+  cout << "\n\t\t*********************************";
+  cout << "\n\t\t*                               *";
+  cout << "\n\t\t*   1_Account Management        *";
+  cout << "\n\t\t*   2_ATM                       *";
+  cout << "\n\t\t*   3_Policies                  *";
+  cout << "\n\t\t*   4_Exit                      *";
+  cout << "\n\t\t*                               *";
+  cout << "\n\t\t*********************************";
+  //   cout << "\n\t\t*********************************";
+  cout << "\n\nPlease choose one option from above : ";
+  cin >> ch;
+  while (!(ch >= 1 && ch <= 3))
+  {
+    if (ch == 4)
+    {
+      cout << "\nE x i t i n g .….….…\n";
+      break;
+    }
+    cout << "\nPlease choose a correct option given.";
+    cout << "\nEnter option again : ";
+    cin >> ch;
+  }
+  return ch;
+}
+
+int acc_man_choice()
+{
+  int ch_a;
+  //   cout << "\n\n\t\t************************************";
+  cout << "\n\t\t************************************";
+  // cout << "\n\t\t                                 ";
+  cout << "\n\t\t         ACCOUNT MANAGEMENT        ";
+  // cout << "\n\t\t                                 ";
+  cout << "\n\t\t************************************\n";
+  //   cout << "\n\t\t************************************";
+
+  //   cout << "\n\n\n\t\t*********************************";
+  cout << "\n\n\t\t*********************************";
+  cout << "\n\t\t*                               *";
+  cout << "\n\t\t*    1_Display All Accounts     *";
+  cout << "\n\t\t*    2_Add Account              *";
+  cout << "\n\t\t*    3_Delete Account           *";
+  cout << "\n  \t\t*    4_Back to main menu        *";
+  cout << "\n\t\t*                               *";
+  cout << "\n\t\t*********************************";
+  //   cout << "\n\t\t*********************************";
+  cout << "\n\nPlease choose one option from above : ";
+  cin >> ch_a;
+  if (ch_a == 4)
+  {
+    main_menu();
+  }
+  while (!(ch_a >= 1 && ch_a <= 4))
+  {
+    cout << "\nPlease choose a correct option given.";
+    cout << "\nEnter option again : ";
+    cin >> ch_a;
+  }
+  return ch_a;
+}
+
+int atm_choice()
+{
+  int ch_atm;
+  // cout<<"\n\n\t\t******************";
+  cout << "\n\t\t********************";
+  // cout<<"\n\t\t                ";
+  cout << "\n\t\t        ATM     ";
+  // cout<<"\n\t\t                ";
+  cout << "\n\t\t********************\n";
+  // cout<<"\n\t\t******************";
+
+  // cout<<"\n\n\n\t\t***************************";
+  cout << "\n\n\t\t****************************";
+  cout << "\n\t\t*                          *";
+  cout << "\n\t\t*    1_Balance inquiry     *";
+  cout << "\n\t\t*    2_Deposit             *";
+  cout << "\n\t\t*    3_Withdraw            *";
+  cout << "\n\t\t*    4_Transfer            *";
+  cout << "\n\t\t*    5_Back to main menu   *";
+  cout << "\n\t\t*                          *";
+  cout << "\n\t\t****************************";
+  // cout<<"\n\t\t****************************";
+  cout << "\n\nPlease choose one option from above : ";
+  cin >> ch_atm;
+  if (ch_atm == 5)
+  {
+    main_menu();
+  }
+  while (!(ch_atm >= 1 && ch_atm <= 5))
+  {
+    cout << "\nPlease choose a correct option given.";
+    cout << "\nEnter option again : ";
+    cin >> ch_atm;
+  }
+  return ch_atm;
+}
+
+void policy()
+{
+  // cout<<"\n\n\t\t***********************";
+  cout << "\n\t\t***********************";
+  // cout<<"\n\t\t                   ";
+  cout << "\n\t\t        POLICIES      ";
+  // cout<<"\n\t\t                   ";
+  cout << "\n\t\t***********************";
+  // cout<<"\n\t\t***********************";
+
+  cout << "\n\n\t\t---COMMUNICATION POLICY---";
+  cout << "\n\nThe Communication Policy contains guidelines to put in place a decision-making process for:\n";
+  cout << "\n\t•Branding / publicity activities and communications being sent to everyone at Meezan Bank Limited.\n\t•Products and services-related communication being sent to a large number of people outside the Bank.\n\t•Communication with external media (newspapers, TV channels etc.) and Public Relations for the Bank.\n\tCommunication on Social Media.\n\t•Crisis Communication.\nThe Policy serves to ensure the following:\n\n\t•Ensure timely dissemination of communication to all stakeholders while maintaining clarity, coherence and credibility.\n\t•Ensure transparency and consistency of voice in internal and external communication.\n\t•Establish guidelines to protect and preserve the confidentiality of the Bank in relevant matters.";
+
+  cout << "\n\n\t\t---CORPORATE SOCIAL RESPONSIBILITY POLICY---";
+  cout << "\n\nThe CSR Policy pertains to all corporate social responsibility activities undertaken by Meezan Bank and applies to all employees of the Bank.\nActivities undertaken by the Bank may include projects being implemented independently by Meezan Bank or projects undertaken in coordination with other entities.";
+
+  cout << "\n\nAreas of Focus";
+
+  cout << "\nMeezan Bank may contribute in the form of financial assistance, providing logistic support and availability of human resources for charitable\n causes in various sectors including, but not limited to the ones mentioned below, as per the Management’s discretion:";
+
+  cout << "\n\t•Health";
+  cout << "\n\t•Social & Environment Sustainability";
+  cout << "\n\tt•Education";
+  cout << "\n\t•Creating awareness about the prohibition of Riba and the available alternatives";
+  cout << "\nThe Bank may also encourage its employees to volunteer and contribute to its own or other organizations’ CSR initiatives.";
+
+  cout << "\n\nGuiding Principles";
+
+  cout << "\n\t•The Bank’s CSR activities will operate under the supervision of this policy.";
+  cout << "\n\t•The Bank shall ensure monitoring of all CSR activities.";
+  cout << "\n\t•The Bank will not participate in any activity that has any component that is considered non-compliant to Islamic Shariah.";
+  cout << "\n\t•Opinion on the Shariah-compliance of a proposed activity shall be sought from the Shariah Compliance Department.";
+  cout << "\n\t•The CSR activity should not be against the business interests of the Bank.";
+
+  cout << "\n\n\t\t---SUSTAINABILITY POLICY---";
+
+  cout << "\n\nThe purpose of the Sustainability Policy is to provide a framework for incorporating sustainability into the Bank’s business\n operations and to minimize the environmental, social, ethical and financial and Shariah risks to the Bank’s \nstakeholders and to the organization itself. It is applicable to all of the Bank’s products and services,\n organizational units and departments and may include projects and activities being implemented independently by Meezan Bank or projects undertaken in \ncoordination with other entities.";
+
+  cout << "\n\nActivities undertaken by the Bank may include projects being implemented independently by Meezan Bank or projects undertaken in \ncoordination with other entities.";
+
+  cout << "\n\n\t\t---MARKETING POLICY---";
+
+  cout << "\n\nThe Marketing Policy of the Bank aims to develop a marketing framework to achieve strong brand equity for the Bank in the market and to highlight \nits standing as a full-fledged Islamic Commercial bank and a one-stop shop for all Shariah-compliant\n banking needs. To achieve top of mind awareness and brand image in the Islamic banking industry by reinforcing\n our key Unique Selling Proposition (USP) of Islamic Banking and absolute Shariah-compliance through Islamic banking literacy and promotional activities that effectively support \ncore product lines to enhance acquisition and promote key distribution channels.";
+
+  cout << "\n\n\t\t---BANKING ON EQUALITY POLICY---";
+  cout << "\n\nMeezan Bank has issued “Banking on Equality (BoE)” Policy to engender equality in banking whilst ensuring all Shariah Standards are being followed enabling\n the Bank to uphold its brand of being the Premier Islamic Bank.";
+
+  cout << "\nThe Policy aims to reduce the gender gap in bank staff as well as in improving the access and use of Islamic financial products & services by women. Thereby,\n help in reducing the gender gap in financial inclusion.";
+
+  cout << "\nThe Bank oversees its implementation on periodic basis, and is also self sufficient in maintaining dis-aggregated data with regard to female employees as well\n as female customers.";
+}
+
+int count()
+{
+  ifstream names("names.txt");
+  ifstream acc_Num("accountnum.txt");
+  ifstream balances("balance.txt");
+
+  string name, accNum;
+  double balance;
+
+  while (getline(names, name) && num_acc < mx_acc)
+  {
+    acc_hold[num_acc] = name;
+    num_acc++;
+  }
+
+  num_acc = 0;
+  while (getline(acc_Num, accNum) && num_acc < mx_acc)
+  {
+    acc_num[num_acc] = accNum;
+    num_acc++;
+  }
+
+  num_acc = 0;
+  while (balances >> balance && num_acc < mx_acc)
+  {
+    acc_bal[num_acc] = balance;
+    num_acc++;
+  }
+  return num_acc;
+}
+
+void disp_all_acc()
+{
+  ifstream namesFile("names.txt");
+  ifstream accountNumFile("accountnum.txt");
+  ifstream balanceFile("balance.txt");
+
+  if (namesFile.fail() || accountNumFile.fail() || balanceFile.fail())
+  {
+    cout << "Error opening file.\n";
+    return;
+  }
+
+  string name, bankName, accountNum;
+  int balance;
+
+  cout << "\nAll Accounts:\n";
+  cout << "Name\t\t\tBank Name\t\tBranch Code\t\tAccount Number\t\tBalance\n";
+  cout << "--------------------------------------------------------------------------------------------------------\n";
+
+  while (getline(namesFile, name) && getline(accountNumFile, accountNum) && balanceFile >> balance)
+  {
+    bankName = accountNum.substr(0, accountNum.find_first_of("0123456789"));
+    string branchCode = accountNum.substr(bankName.length(), 2);
+    accountNum = accountNum.substr(bankName.length() + branchCode.length());
+
+    cout << name << "\t\t" << bankName << "\t\t\t" << branchCode << "\t\t\t" << accountNum << "\t\t\t" << balance << endl;
+  }
+
+  namesFile.close();
+  accountNumFile.close();
+  balanceFile.close();
+}
+
+void disp_acc_bank()
+{
+  cout << "\n\n----- Display all account of particular bank ------\n";
+
+  string bankName;
+  cin.ignore();
+  cout << "\nEnter the name of bank : ";
+  getline(cin, bankName);
+  ifstream namesFile("names.txt");
+  ifstream accountNumFile("accountnum.txt");
+  ifstream balanceFile("balance.txt");
+
+  if (namesFile.fail() || accountNumFile.fail() || balanceFile.fail())
+  {
+    cerr << "Error opening file.\n";
+    return;
+  }
+
+  string name, accountNum;
+  int balance;
+
+  cout << "\nAccounts of " << bankName << " bank:\n";
+  cout << "Name\t\tAccount Number\tBalance\n";
+  cout << "-----------------------------------------\n";
+
+  while (getline(namesFile, name) && getline(accountNumFile, accountNum) && balanceFile >> balance)
+  {
+    if (accountNum.find(bankName) != string::npos)
+    {
+      string branchCode = accountNum.substr(bankName.length(), 2);
+      accountNum = accountNum.substr(bankName.length() + branchCode.length(), string::npos);
+      cout << name << "\t" << accountNum << "\t\t" << balance << endl;
+    }
+  }
+
+  namesFile.close();
+  accountNumFile.close();
+  balanceFile.close();
+}
+
+void disp_acc_branch()
+{
+  cout << "\n\n--------- Accounts By Branch Code ----------\n";
+
+  string bankName, branchCode;
+  cin.ignore();
+  cout << "\nEnter the name of bank : ";
+  getline(cin, bankName);
+  cout << "\nEnter branch code : ";
+  cin >> branchCode;
+
+  ifstream namesFile("names.txt");
+  ifstream accountNumFile("accountnum.txt");
+  ifstream balanceFile("balance.txt");
+
+  if (namesFile.fail() || accountNumFile.fail() || balanceFile.fail())
+  {
+    cerr << "Error opening file.\n";
+    return;
+  }
+
+  string name, accountNum;
+  int balance;
+  bool check = true;
+
+  while (getline(namesFile, name) && getline(accountNumFile, accountNum) && balanceFile >> balance)
+  {
+    if (accountNum.find(bankName) != string::npos && accountNum.substr(bankName.length(), 2) == branchCode)
+    {
+
+      cout << "\nAccounts in branch " << branchCode << " of " << bankName << " bank:\n";
+      cout << "Name\t\tAccount Number\tBalance\n";
+      cout << "-----------------------------------------\n";
+      accountNum = accountNum.substr(bankName.length() + branchCode.length());
+      cout << name << "\t" << accountNum << "\t\t" << balance << endl;
+      check = false;
+    }
+  }
+  if (check)
+    cout << "\nNo account with this branch code.";
+
+  namesFile.close();
+  accountNumFile.close();
+  balanceFile.close();
+}
+
+void disp_acc_low_bal()
+{
+  cout << "\n\n-------- Accounts With Balance Less Than 1000 ----------\n";
+  ifstream balanceFile("balance.txt");
+  ifstream nameFile("names.txt");
+  ifstream accountFile("accountnum.txt");
+
+  if (!balanceFile || !nameFile || !accountFile)
+  {
+    cout << "Error: Unable to open file\n";
+    return;
+  }
+
+  string name, accountNumber;
+  double balance;
+  bool check = true;
+
+  while (getline(balanceFile, accountNumber) && getline(nameFile, name) && getline(accountFile, accountNumber, ':') && balanceFile >> balance)
+  {
+    if (balance < 1000)
+    {
+      cout << "\nAccounts with balance less than 1000:\n";
+      cout << "Name: " << name << endl;
+      cout << "Account Number: " << accountNumber << endl;
+      cout << "Balance: " << balance << endl
+           << endl;
+      check = false;
+    }
+  }
+  if (check)
+    cout << "\nNo account with less than 1000 balance…";
+  balanceFile.close();
+  nameFile.close();
+  accountFile.close();
+}
+
+void disp_acc_high_bal()
+{
+  cout << "\n\n-------- Accounts With Balance Greater Than 100000 ----------\n\n";
+  ifstream balanceFile("balance.txt");
+  ifstream nameFile("names.txt");
+  ifstream accountFile("accountnum.txt");
+
+  if (!balanceFile || !nameFile || !accountFile)
+  {
+    cout << "Error: Unable to open file\n";
+    return;
+  }
+
+  string name, accountNumber;
+  double balance;
+  bool check = true;
+
+  while (getline(balanceFile, accountNumber) && getline(nameFile, name) && getline(accountFile, accountNumber, ':') && balanceFile >> balance)
+  {
+    if (balance > 100000)
+    {
+      cout << "Name: " << name << endl;
+      cout << "Account Number: " << accountNumber << endl;
+      cout << "Balance: " << balance << endl
+           << endl;
+      check = false;
+    }
+  }
+  if (check)
+    cout << "\nNo bank account with balaance greater than 100000.\n";
+  balanceFile.close();
+  nameFile.close();
+  accountFile.close();
+}
+
+void add_acc() // Add Account
+{
+  cin.ignore();
+  string name;
+  cout << "\nEnter name : ";
+  getline(cin, name);
+
+  ofstream out;
+
+  out.open("names.txt", ios::app);
+  if (out.is_open())
+  {
+    out << name << "\n";
+    out.close();
+  }
+  else
+    cout << "\nFile opening error…";
+
+  cin.ignore();
+  string bank, branch, accNum;
+  cout << "\nEnter bank name : ";
+  getline(cin, bank);
+  cout << "\nEnter branch code : ";
+  getline(cin, branch);
+  cout << "\nEnter account number : ";
+  getline(cin, accNum);
+
+  ofstream acc;
+
+  acc.open("accountnum.txt", ios::app);
+  if (acc.is_open())
+  {
+    acc << bank << branch << ":" << accNum << "\n";
+    cout << "\nAccount is created successfully...";
+    acc.close();
+  }
+  else
+    cout << "\nAccount opening error…";
+
+  ofstream balance;
+  balance.open("balance.txt", ios::app);
+  double bal;
+
+  if (balance.is_open())
+  {
+    cout << "\nEnter the amount of your first deposit : ";
+    cin >> bal;
+    balance << bal << "\n";
+    balance.close();
+  }
+  else
+    cout << "\nFile opening error…";
+}
+
+void del_acc()//Delete Account
+{
+    string account_to_delete;
+    cin.ignore();
+    cout << "Enter account to delete: ";
+    getline(cin, account_to_delete);
+
+    ifstream names_temp_file("names.txt");
+    ifstream accountnum_temp_file("accountnum.txt");
+    ifstream balance_temp_file("balance.txt");
+    ofstream names_new_file("names_new.txt");
+    ofstream accountnum_new_file("accountnum_new.txt");
+    ofstream balance_new_file("balance_new.txt");
+
+    if (!names_temp_file || !accountnum_temp_file || !balance_temp_file ||
+        !names_new_file || !accountnum_new_file || !balance_new_file)
+    {
+      cout << "Error creating temporary files!" << endl;
+      main_menu();
+    }
+
+    string temp_name, temp_accountnum, temp_balance;
+    bool check=true;
+    while (getline(names_temp_file, temp_name) &&
+           getline(accountnum_temp_file, temp_accountnum) &&
+           getline(balance_temp_file, temp_balance))
+    {
+      if (temp_accountnum != account_to_delete)
+      {
+        names_new_file << temp_name << endl;
+        accountnum_new_file << temp_accountnum << endl;
+        balance_new_file << temp_balance << endl;
+        check=false;
+      }
+    }
+    if(check)
+     cout<<"\nAccount not found…";
+    else
+     cout << "Account " << account_to_delete << " has been deleted." << endl; 
+
+    names_temp_file.close();
+    accountnum_temp_file.close();
+    balance_temp_file.close();
+    names_new_file.close();
+    accountnum_new_file.close();
+    balance_new_file.close();
+
+    remove("names.txt");
+    remove("accountnum.txt");
+    remove("balance.txt");
+
+    rename("names_new.txt", "names.txt");
+    rename("accountnum_new.txt", "accountnum.txt");
+    rename("balance_new.txt", "balance.txt");
+
+  }
+
+  void bal_inq() // Balance Inquiry
+  {
+
+    ifstream disp_name, disp_acc_num, disp_bal;
+    disp_name.open("names.txt");
+    disp_acc_num.open("accountnum.txt");
+    disp_bal.open("balance.txt");
+
+    string acc;
+    cin.ignore();
+    cout << "\nEnter account number : ";
+    getline(cin, acc);
+
+    string account, name, blnc, a;
+
+    while (getline(disp_acc_num, account))
+    {
+      getline(disp_name, name);
+      disp_bal >> blnc;
+      if (acc == account)
+      {
+        cout << "\nName : " << name;
+        cout << "\nAccount number : " << account;
+        cout << "\nBalance : " << blnc;
+        break;
+      }
+    }
+  }
+
+  void deposit() // Deposit
+  {
+    string acc;
+    cout<<"\nEnter the account number in which you want to deposit money : ";
+    cin.ignore();
+    getline(cin,acc);
+
+    bool check=Deposit(acc);
+    if(check)
+     cout<<"\nAccount not found…";
+    else
+     cout<<"\nThe amount has been deposited successfully…"; 
+
+  }
+
+bool Deposit(string acc)
+{
+  ifstream names_temp_file("names.txt");
+    ifstream accountnum_temp_file("accountnum.txt");
+    ifstream balance_temp_file("balance.txt");
+    ofstream names_new_file("names_new.txt");
+    ofstream accountnum_new_file("accountnum_new.txt");
+    ofstream balance_new_file("balance_new.txt");
+
+    if (!names_temp_file || !accountnum_temp_file || !balance_temp_file ||
+        !names_new_file || !accountnum_new_file || !balance_new_file)
+    {
+      cout << "Error creating temporary files!" << endl;
+      main_menu();
+    }
+
+    string temp_name, temp_accountnum; 
+    double temp_balance,u_bal,new_bal;
+    bool check=true;
+    while (getline(names_temp_file, temp_name) &&
+           getline(accountnum_temp_file, temp_accountnum))
+    {
+      balance_temp_file>>temp_balance;
+      if (temp_accountnum == acc)
+      {
+        cout<<"\nEnter the amount again : ";
+        cin>>u_bal;
+        new_bal=u_bal+temp_balance;
+        balance_new_file << new_bal << endl;
+        check=false;
+      }
+      else
+       balance_new_file << temp_balance << endl;
+      names_new_file << temp_name << endl;
+      accountnum_new_file << temp_accountnum << endl;
+      
+    }
+
+    names_temp_file.close();
+    accountnum_temp_file.close();
+    balance_temp_file.close();
+    names_new_file.close();
+    accountnum_new_file.close();
+    balance_new_file.close();
+
+    remove("names.txt");
+    remove("accountnum.txt");
+    remove("balance.txt");
+
+    rename("names_new.txt", "names.txt");
+    rename("accountnum_new.txt", "accountnum.txt");
+    rename("balance_new.txt", "balance.txt");
+
+    return check;
+}
+
+void withdraw()//Withdraw
+{
+   string acc;
+    cout<<"\nEnter the account number from which you want to withdraw money : ";
+    cin.ignore();
+    getline(cin,acc);
+
+    bool check=withDraw(acc);
+    if(check)
+     cout<<"\nAccount not found…";
+    else
+     cout<<"\nThe amount has been withdrawn successfully…";   
+}
+
+bool withDraw(string acc)
+{
+    ifstream names_temp_file("names.txt");
+    ifstream accountnum_temp_file("accountnum.txt");
+    ifstream balance_temp_file("balance.txt");
+    ofstream names_new_file("names_new.txt");
+    ofstream accountnum_new_file("accountnum_new.txt");
+    ofstream balance_new_file("balance_new.txt");
+
+    if (!names_temp_file || !accountnum_temp_file || !balance_temp_file ||
+        !names_new_file || !accountnum_new_file || !balance_new_file)
+    {
+      cout << "Error creating temporary files!" << endl;
+      main_menu();
+    }
+
+    string temp_name, temp_accountnum; 
+    double temp_balance,u_bal,new_bal;
+    bool check=true;
+    while (getline(names_temp_file, temp_name) &&
+           getline(accountnum_temp_file, temp_accountnum))
+    {
+      balance_temp_file>>temp_balance;
+      if (temp_accountnum == acc)
+      {
+        if(temp_balance>=1000)
+        {
+        cout<<"\nEnter the amount  : ";
+        cin>>u_bal;
+        new_bal=temp_balance-u_bal;
+        balance_new_file << new_bal << endl;
+        }
+        else
+        {
+         cout<<"\nYou have no sufficiant amount…";
+         main_menu();
+        } 
+        check=false;
+      }
+      else
+       balance_new_file << temp_balance << endl;
+      names_new_file << temp_name << endl;
+      accountnum_new_file << temp_accountnum << endl;
+      
+    }
+   
+    names_temp_file.close();
+    accountnum_temp_file.close();
+    balance_temp_file.close();
+    names_new_file.close();
+    accountnum_new_file.close();
+    balance_new_file.close();
+
+    remove("names.txt");
+    remove("accountnum.txt");
+    remove("balance.txt");
+
+    rename("names_new.txt", "names.txt");
+    rename("accountnum_new.txt", "accountnum.txt");
+    rename("balance_new.txt", "balance.txt");
+
+    return check;
+
+}
+
+void transfer()//Transfer
+{
+  string u_acc,d_acc;
+  cin.ignore();
+  cout<<"\nEnter your account number : ";
+  getline(cin,u_acc);
+  cout<<"\nEnter the account number in which you want to transfer money : ";
+  getline(cin,d_acc);
+
+  bool ch=withDraw(u_acc);
+  bool check=Deposit(d_acc);
+  
+  if(check)
+   cout<<"\nYour account is not found…";
+  else 
+   {
+    if(ch)
+     cout<<"\ndestination account is not found…";
+    else
+     cout<<"\nThe amount has been transfered successfully…"; 
+   } 
+}
